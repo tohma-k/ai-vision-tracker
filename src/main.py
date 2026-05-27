@@ -15,6 +15,13 @@ print("Press 'q' to quit.")
 
 prev_time = time.time()
 
+# Smoothed target position
+smoothed_x = None
+smoothed_y = None
+
+# Smoothing factor
+alpha = 0.15
+
 while True:
     # Read frame from webcam
     ret, frame = cap.read()
@@ -89,6 +96,22 @@ while True:
 
         error_x = best_target["center_x"] - screen_center_x
         error_y = best_target["center_y"] - screen_center_y
+        
+        # Initialize smoothing
+        if smoothed_x is None:
+            smoothed_x = best_target["center_x"]
+            smoothed_y = best_target["center_y"]
+
+        # Exponential smoothing
+        smoothed_x = int(
+            alpha * best_target["center_x"] +
+            (1 - alpha) * smoothed_x
+        )
+
+        smoothed_y = int(
+            alpha * best_target["center_y"] +
+            (1 - alpha) * smoothed_y
+        )
 
         # Bounding box
         cv2.rectangle(
@@ -102,7 +125,7 @@ while True:
         # Target center
         cv2.circle(
             frame,
-            (best_target["center_x"], best_target["center_y"]),
+            (smoothed_x, smoothed_y),
             5,
             (0, 0, 255),
             -1
@@ -112,7 +135,7 @@ while True:
         cv2.line(
             frame,
             (screen_center_x, screen_center_y),
-            (best_target["center_x"], best_target["center_y"]),
+            (smoothed_x, smoothed_y),
             (255, 0, 0),
             2
         )
