@@ -141,20 +141,11 @@ python src/serial_test.py
 
 ---
 
-## Project Documentation
-
-Additional development logs, hardware integration notes, and prototype iterations are documented in:
+## Repository Structure
 
 ```txt
-docs/dev-log.md
-```
-
----
-
-## Demo
-
-Demo videos and hardware photos are available in:
-
-```txt
-assets/
+src/        → Python computer vision and tracking logic
+arduino/    → Arduino servo control firmware
+docs/       → Development logs and architecture notes
+assets/     → Demo videos and hardware photos
 ```
