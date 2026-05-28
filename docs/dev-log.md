@@ -146,13 +146,47 @@ Tune smoothing and responsiveness.
 The purchased pan bracket was designed for MG996R-class servos, while the current project uses MG90S micro servos.
 
 ### Issue Observed
-The included metal hub adapter did not fit the MG90S servo shaft, indicating a spline and mounting compatibility mismatch.
+The included metal hub adapter did not fit the MG90S servo shaft, indicating a spline and mounting compatibility mismatch between the bracket hardware and the selected actuator.
 
 ### Resolution
-Used the MG90S-compatible cross horn attachment as the mechanical interface between the servo shaft and the bracket.
+Used the MG90S-compatible cross horn attachment as the rotational interface between the servo shaft and the pan bracket.
 
 ### Engineering Takeaway
-This highlighted the importance of checking servo spline size, mounting dimensions, torque requirements, and mechanical compatibility before selecting hardware.
+This highlighted the importance of validating:
+- servo spline compatibility
+- mounting dimensions
+- torque requirements
+- mechanical interface standards
+before hardware procurement and integration.
+
+## Prototype Mechanical Coupling
+
+### Issue
+The included bracket mounting hardware remained mechanically incompatible with the MG90S spline geometry and mounting pattern.
+
+### Temporary Solution
+Implemented a temporary horn-to-bracket fixture using adhesive mounting techniques to rapidly prototype rotational movement prior to designing a permanent mechanical interface.
+
+### Result
+The assembly achieved:
+- stable rotational motion
+- smooth servo actuation
+- acceptable mechanical rigidity
+- reliable bracket movement during sweep testing
+
+### Motion Characteristics
+- MG90S torque proved sufficient for single-axis bracket rotation
+- Rotational movement remained smooth under light load
+- No major oscillation or instability observed during testing
+- Servo response remained consistent under Arduino USB power
+
+### Engineering Takeaway
+Rapid prototyping enabled validation of:
+- actuator performance
+- control behavior
+- rotational stability
+- mechanical feasibility
+before investing additional time into mechanical refinement.
 
 ## Future Improvements
 
