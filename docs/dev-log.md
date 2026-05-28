@@ -194,6 +194,17 @@ Initial testing showed the pan servo moved opposite the target direction due to 
 ### Tracking Stability Tuning
 Initial AI-controlled tracking produced jagged servo motion due to detection noise and overly frequent control updates. Increased the deadzone, reduced proportional gain, and added a servo update interval to smooth physical movement.
 
+### Runtime Performance
+- System operated at approximately 8 FPS during real-time person tracking
+- Frame rate sufficient for low-speed servo actuation and proof-of-concept autonomous tracking
+- CPU inference identified as the primary performance bottleneck
+
+### Current Limitations
+- Motion is functional but still slightly jagged
+- Single-axis pan tracking only
+- Temporary taped horn-to-bracket coupling
+- No external servo power yet
+
 ## Future Improvements
 
 * Dual-axis pan-tilt tracking
