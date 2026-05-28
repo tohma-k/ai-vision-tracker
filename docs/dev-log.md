@@ -48,3 +48,104 @@ Successfully transmitted angle commands from Python to Arduino.
 - Servo response nearly instantaneous
 - Serial communication stable
 - Angle constraints functioning correctly
+
+# Phase 4 — AI-Controlled Servo Tracking
+
+## Objective
+Integrate the computer vision tracking system with the servo control pipeline so that detected target movement physically controls servo rotation.
+
+## System Architecture
+
+Camera
+↓
+OpenCV Video Capture
+↓
+YOLOv8 Person Detection
+↓
+Target Selection
+↓
+Tracking Error Calculation
+↓
+Exponential Smoothing
+↓
+Python Control Logic
+↓
+PySerial Communication
+↓
+Arduino Serial Receiver
+↓
+PWM Servo Signal
+↓
+MG90S Servo Rotation
+
+## Tracking Logic
+
+The system calculates the horizontal distance between:
+
+* screen center
+* detected target center
+
+This value becomes the tracking error.
+
+Positive horizontal error:
+
+* target is right of center
+* servo should rotate right
+
+Negative horizontal error:
+
+* target is left of center
+* servo should rotate left
+
+## Control System Concept
+
+The servo angle acts as the actuator output.
+
+The tracking error acts as the control input.
+
+The system continuously:
+
+1. detects target position
+2. computes error
+3. adjusts servo angle
+4. physically repositions camera
+
+This forms a basic closed-loop control system.
+
+## Planned Implementation
+
+### Step 1
+
+Mount webcam onto pan assembly.
+
+### Step 2
+
+Send servo angle commands automatically from Python.
+
+### Step 3
+
+Map tracking error to servo angle adjustments.
+
+### Step 4
+
+Tune smoothing and responsiveness.
+
+## Engineering Concepts Learned
+
+* Computer vision inference
+* Real-time frame processing
+* Serial communication
+* PWM servo control
+* Embedded systems integration
+* Closed-loop control systems
+* Hardware/software interaction
+
+## Future Improvements
+
+* Dual-axis pan-tilt tracking
+* PID control
+* Raspberry Pi edge deployment
+* Multi-object tracking
+* Autonomous target prediction
+* ROS2 integration
+* Edge AI optimization
