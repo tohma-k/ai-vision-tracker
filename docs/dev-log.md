@@ -140,6 +140,20 @@ Tune smoothing and responsiveness.
 * Closed-loop control systems
 * Hardware/software interaction
 
+## Mechanical Integration Notes
+
+### Bracket Compatibility Issue
+The purchased pan bracket was designed for MG996R-class servos, while the current project uses MG90S micro servos.
+
+### Issue Observed
+The included metal hub adapter did not fit the MG90S servo shaft, indicating a spline and mounting compatibility mismatch.
+
+### Resolution
+Used the MG90S-compatible cross horn attachment as the mechanical interface between the servo shaft and the bracket.
+
+### Engineering Takeaway
+This highlighted the importance of checking servo spline size, mounting dimensions, torque requirements, and mechanical compatibility before selecting hardware.
+
 ## Future Improvements
 
 * Dual-axis pan-tilt tracking
