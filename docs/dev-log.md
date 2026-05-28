@@ -188,6 +188,12 @@ Rapid prototyping enabled validation of:
 - mechanical feasibility
 before investing additional time into mechanical refinement.
 
+### Control Direction Calibration
+Initial testing showed the pan servo moved opposite the target direction due to the physical mounting orientation. Reversed the servo angle update sign to align software control logic with the mechanical assembly.
+
+### Tracking Stability Tuning
+Initial AI-controlled tracking produced jagged servo motion due to detection noise and overly frequent control updates. Increased the deadzone, reduced proportional gain, and added a servo update interval to smooth physical movement.
+
 ## Future Improvements
 
 * Dual-axis pan-tilt tracking
