@@ -1,5 +1,7 @@
 # AI Vision Tracker
 
+![Tracking Demo](assets/ai-tracking-demo.gif)
+
 Real-time AI-powered robotic tracking system that combines computer vision, embedded systems, and hardware actuation to physically track detected targets using YOLOv8, OpenCV, Arduino, and servo-controlled motion.
 
 ---
@@ -36,27 +38,29 @@ The project integrates:
 
 ## System Architecture
 
-Camera
-↓
-OpenCV Video Capture
-↓
-YOLOv8 Person Detection
-↓
-Target Selection
-↓
-Tracking Error Calculation
-↓
-Exponential Smoothing
-↓
-Python Control Logic
-↓
-PySerial Communication
-↓
-Arduino Serial Receiver
-↓
-PWM Servo Signal
-↓
-MG90S Servo Rotation
+![Architecture](docs/architecture.png)
+
+---
+
+## Hardware Prototype
+
+### Mounted Webcam
+
+![Mounted Webcam](assets/mounted-webcam.jpg)
+
+The USB webcam is mounted on a servo-actuated pan assembly that physically rotates in response to AI-generated tracking commands.
+
+### Bracket Assembly
+
+![Bracket Assembly](assets/bracket-assembly.jpg)
+
+The pan mechanism uses an MG90S servo motor and a prototype bracket assembly. During development, mechanical compatibility issues required an alternative horn-to-bracket coupling solution to validate rotational tracking.
+
+### Wiring
+
+![Wiring](assets/wiring.jpg)
+
+The Arduino Uno receives servo angle commands from the Python application through USB serial communication and generates PWM signals to control the MG90S servo motor.
 
 ---
 
