@@ -214,3 +214,17 @@ Initial AI-controlled tracking produced jagged servo motion due to detection noi
 * Autonomous target prediction
 * ROS2 integration
 * Edge AI optimization
+
+## Phase 5 — Proportional Control Tuning
+
+### Objective
+Improve tracking smoothness by replacing fixed-step servo movement with proportional control.
+
+### Result
+Servo movement became more responsive to large target errors while reducing excessive movement near the center.
+
+### Parameters Tested
+- Deadzone: 60 pixels
+- Proportional gain: 0.015
+- Servo update interval: 0.10 seconds
+- Smoothing alpha: 0.13

@@ -30,12 +30,12 @@ servo_angle = 90
 
 # smoothing
 smoothed_x = None
-alpha = 0.05
+alpha = 0.13
 
 prev_time = time.time()
 
 last_servo_update = time.time()
-servo_update_interval = 0.25
+servo_update_interval = 0.10
 
 print("Press q to quit.")
 
@@ -129,22 +129,17 @@ while True:
         # SERVO CONTROL
         # ---------------------------------
 
-        deadzone = 80
+        deadzone = 60
+        kp = 0.015
         current_time = time.time()
 
         if abs(error_x) > deadzone and current_time - last_servo_update > servo_update_interval:
+            adjustment = error_x * kp
 
-            step_size = 1
-
-            if error_x > 0:
-                servo_angle -= step_size
-            else:
-                servo_angle += step_size
-
+            servo_angle -= adjustment
             servo_angle = max(30, min(150, servo_angle))
 
             arduino.write(f"{servo_angle}\n".encode())
-
             print(f"error_x: {error_x}, servo_angle: {servo_angle}")
 
             last_servo_update = current_time
