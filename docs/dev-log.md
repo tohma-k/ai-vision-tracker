@@ -228,3 +228,6 @@ Servo movement became more responsive to large target errors while reducing exce
 - Proportional gain: 0.015
 - Servo update interval: 0.10 seconds
 - Smoothing alpha: 0.13
+
+### Other Optimizations
+- Reduced YOLO inference load by resizing camera input to 640×480, improving real-time tracking performance by roughly 25% from ~8 FPS to ~10 FPS.

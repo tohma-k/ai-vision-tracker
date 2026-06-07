@@ -22,6 +22,9 @@ cap = cv2.VideoCapture(1)
 if not cap.isOpened():
     raise RuntimeError("Could not open webcam")
 
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
 # -----------------------------
 # SERVO VARIABLES
 # -----------------------------
