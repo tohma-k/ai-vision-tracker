@@ -2,6 +2,7 @@ import cv2
 import time
 import serial
 from ultralytics import YOLO
+from camera.camera_stream import CameraStream
 
 # -----------------------------
 # SERIAL SETUP
@@ -17,13 +18,11 @@ time.sleep(2)
 
 model = YOLO("yolov8n.pt")
 
-cap = cv2.VideoCapture(1)
+# -----------------------------
+# CAMERA SETUP
+# -----------------------------
 
-if not cap.isOpened():
-    raise RuntimeError("Could not open webcam")
-
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+camera = CameraStream(1).start()
 
 # -----------------------------
 # SERVO VARIABLES
@@ -48,10 +47,12 @@ print("Press q to quit.")
 
 while True:
 
-    ret, frame = cap.read()
+    ret, frame = camera.read()
 
-    if not ret:
-        break
+    if not ret or frame is None:
+        continue
+    
+    frame = frame.copy()
 
     results = model(frame, verbose=False)
 
@@ -216,6 +217,6 @@ while True:
 
 arduino.close()
 
-cap.release()
+camera.stop()
 
 cv2.destroyAllWindows()

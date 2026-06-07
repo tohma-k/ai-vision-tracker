@@ -231,3 +231,5 @@ Servo movement became more responsive to large target errors while reducing exce
 
 ### Other Optimizations
 - Reduced YOLO inference load by resizing camera input to 640×480, improving real-time tracking performance by roughly 25% from ~8 FPS to ~10 FPS.
+- Implemented threaded webcam capture to separate video acquisition from the tracking loop, but the runtime performance decreased from 10 to 8 FPS, likely due to thread overhead and frame copying while YOLO inference remained the primary bottleneck. Reverted to direct OpenCV frame capture.
+- 
