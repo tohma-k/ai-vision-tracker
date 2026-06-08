@@ -1,23 +1,36 @@
 #include <Servo.h>
 
 Servo panServo;
+Servo tiltServo;
 
-int currentAngle = 90;
+int panAngle = 90;
+int tiltAngle = 90;
 
 void setup() {
     Serial.begin(9600);
+
     panServo.attach(9);
-    panServo.write(currentAngle);
+    tiltServo.attach(10);
+
+    panServo.write(panAngle);
+    tiltServo.write(tiltAngle);
 }
 
 void loop() {
     if (Serial.available() > 0) {
         String input = Serial.readStringUntil('\n');
 
-        int angle = input.toInt();
-        angle = constrain(angle, 0, 180);
+        int commaIndex = input.indexOf(',');
 
-        currentAngle = angle;
-        panServo.write(currentAngle);
+        if (commaIndex > 0) {
+            int pan = input.substring(0, commaIndex).toInt();
+            int tilt = input.substring(commaIndex + 1).toInt();
+
+            panAngle = constrain(pan, 30, 150);
+            tiltAngle = constrain(tilt, 45, 135);
+
+            panServo.write(panAngle);
+            tiltServo.write(tiltAngle);
+        }
     }
 }
