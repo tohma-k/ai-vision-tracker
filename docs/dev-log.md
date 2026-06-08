@@ -233,3 +233,23 @@ Servo movement became more responsive to large target errors while reducing exce
 - Reduced YOLO inference load by resizing camera input to 640×480, improving real-time tracking performance by roughly 25% from ~8 FPS to ~10 FPS.
 - Implemented threaded webcam capture to separate video acquisition from the tracking loop, but the runtime performance decreased from 10 to 8 FPS, likely due to thread overhead and frame copying while YOLO inference remained the primary bottleneck. Reverted to direct OpenCV frame capture.
 - Reduced YOLO's inference image size. imgsz=320: 10 to 20~ FPS, no significant degradation in person detection quality during testing.
+
+## Phase 6 — Dual-Axis Servo Control
+
+### Objective
+Extend the single-axis tracking system to support pan and tilt control using two MG90S servos.
+
+### Hardware Update
+- Pan servo connected to Arduino pin 9
+- Tilt servo connected to Arduino pin 10
+- Both servos share Arduino 5V and GND during prototype testing
+
+### Result
+Successfully controlled pan and tilt servos through comma-separated serial commands from Python.
+
+### Serial Protocol
+Format: `pan,tilt`
+Example: `90,120`
+
+### Mechanical Scaling Limitation
+The initial prototype successfully validated AI-controlled tracking using MG90S servos and a temporary mounting solution. As the system expanded to dual-axis pan-tilt tracking, mechanical rigidity became the primary limitation. Future revisions will use actuators designed for the bracket interface to improve load capacity and mounting stability.
