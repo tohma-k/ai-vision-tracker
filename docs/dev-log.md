@@ -253,3 +253,6 @@ Example: `90,120`
 
 ### Mechanical Scaling Limitation
 The initial prototype successfully validated AI-controlled tracking using MG90S servos and a temporary mounting solution. As the system expanded to dual-axis pan-tilt tracking, mechanical rigidity became the primary limitation. Future revisions will use actuators designed for the bracket interface to improve load capacity and mounting stability.
+
+### Mechanical Update
+Purchased a pair of MG996Rs. The brackets fit perfectly with the new servos. Also purchased a 5V 5A AC to DC power supply with a female terminal connector for sufficient power supply for the two servos.

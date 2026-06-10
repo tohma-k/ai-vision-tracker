@@ -27,7 +27,7 @@ void loop() {
             int tilt = input.substring(commaIndex + 1).toInt();
 
             panAngle = constrain(pan, 30, 150);
-            tiltAngle = constrain(tilt, 45, 135);
+            tiltAngle = constrain(tilt, 60, 125);
 
             panServo.write(panAngle);
             tiltServo.write(tiltAngle);
