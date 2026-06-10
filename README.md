@@ -1,6 +1,6 @@
 # AI Vision Tracker
 
-![Tracking Demo](assets\dual-servo-ai-tracking-demo.gif)
+![Tracking Demo](assets/dual-servo-ai-tracking-demo.gif)
 
 Real-time AI-powered robotic tracking system that combines computer vision, embedded systems, and hardware actuation to physically track detected targets using YOLOv8, OpenCV, Arduino, and servo-controlled motion.
 
@@ -47,7 +47,7 @@ The project integrates:
 
 ### Mounted Webcam
 
-![Mounted Webcam](assets\dual-servo-mounted-webcam.jpg)
+![Mounted Webcam](assets/dual-servo-mounted-webcam.jpg)
 
 The USB webcam is mounted on a dual-axis pan-tilt platform actuated by MG996R servos and controlled through a real-time AI tracking pipeline.
 
