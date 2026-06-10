@@ -1,6 +1,6 @@
 # AI Vision Tracker
 
-![Tracking Demo](assets/ai-tracking-demo.gif)
+![Tracking Demo](assets\dual-servo-ai-tracking-demo.gif)
 
 Real-time AI-powered robotic tracking system that combines computer vision, embedded systems, and hardware actuation to physically track detected targets using YOLOv8, OpenCV, Arduino, and servo-controlled motion.
 
@@ -28,10 +28,11 @@ The project integrates:
 * Intelligent target selection
 * Bounding box and target center tracking
 * Exponential smoothing for tracking stability
-* AI-controlled servo motor actuation
+* Dual-axis pan-tilt camera tracking
+* Proportional control-based servo actuation
 * Python ↔ Arduino serial communication
 * Real-time webcam processing
-* Closed-loop horizontal tracking system
+* Closed-loop visual tracking system
 * FPS monitoring and runtime diagnostics
 
 ---
@@ -46,21 +47,34 @@ The project integrates:
 
 ### Mounted Webcam
 
-![Mounted Webcam](assets/mounted-webcam.jpg)
+![Mounted Webcam](assets\dual-servo-mounted-webcam.jpg)
 
-The USB webcam is mounted on a servo-actuated pan assembly that physically rotates in response to AI-generated tracking commands.
+The USB webcam is mounted on a dual-axis pan-tilt platform actuated by MG996R servos and controlled through a real-time AI tracking pipeline.
 
 ### Bracket Assembly
 
-![Bracket Assembly](assets/bracket-assembly.jpg)
+![Bracket Assembly](assets/dual-servo-bracket-assembly.jpg)
 
-The pan mechanism uses an MG90S servo motor and a prototype bracket assembly. During development, mechanical compatibility issues required an alternative horn-to-bracket coupling solution to validate rotational tracking.
+The pan-tilt assembly uses dual MG996R high-torque servos and a dedicated external power supply to support webcam load and dual-axis tracking.
 
 ### Wiring
 
-![Wiring](assets/wiring.jpg)
+![Wiring](assets/dual-servo-wiring.jpg)
 
-The Arduino Uno receives servo angle commands from the Python application through USB serial communication and generates PWM signals to control the MG90S servo motor.
+The Arduino Uno receives pan and tilt angle commands from the Python application through USB serial communication and generates PWM signals for dual MG996R servo control.
+
+---
+
+## Runtime Performance
+
+| Metric | Value |
+|----------|----------|
+| Average FPS | ~15 |
+| Peak FPS | ~20 |
+| Webcam Resolution | 640×480 |
+| YOLO Inference Resolution | 320×320 |
+
+Performance improvements were achieved by reducing YOLO inference resolution while maintaining acceptable person detection accuracy.
 
 ---
 
@@ -77,9 +91,10 @@ The Arduino Uno receives servo angle commands from the Python application throug
 ### Hardware
 
 * Arduino Uno
-* MG90S Servo Motor
+* 2× MG996R High-Torque Servos
 * USB Webcam
-* Pan Rotation Bracket
+* Pan-Tilt Bracket Assembly
+* 5V 5A External Power Supply
 * Breadboard + Jumper Wires
 
 ---
@@ -119,37 +134,41 @@ python src/serial_test.py
 * Hardware/software interaction
 * Robotics prototyping
 * Motion smoothing and stability tuning
+* Proportional control
+* Power distribution for embedded systems
+* Mechanical constraint management
+* Pan-tilt robotics systems
 
 ---
 
 ## Current Limitations
 
-* Single-axis pan tracking only
-* CPU-based inference (~8 FPS)
-* Prototype mechanical coupling
-* Tracking motion still requires tuning for smoother actuation
+* CPU-based inference (~15 FPS average, ~20 FPS peak)
+* Person detection only
+* Proportional control only (PID not yet implemented)
+* Limited tracking range due to mechanical safety constraints
 
 ---
 
 ## Future Improvements
 
-* Dual-axis pan-tilt tracking
 * PID control implementation
 * Raspberry Pi edge deployment
 * GPU acceleration / TensorRT optimization
 * Multi-object tracking
 * Autonomous target prediction
 * ROS2 integration
-* Permanent mechanical mounting system
-* External servo power distribution
+* Face tracking
+* Object re-identification
+* Remote telemetry dashboard
 
 ---
 
 ## Repository Structure
 
 ```txt
-src/        → Python computer vision and tracking logic
-arduino/    → Arduino servo control firmware
-docs/       → Development logs and architecture notes
-assets/     → Demo videos and hardware photos
+src/        → Computer vision, tracking, and control logic
+arduino/    → Arduino pan-tilt control firmware
+docs/       → Development logs, architecture, and wiring diagrams
+assets/     → Demo videos, GIFs, and hardware photos
 ```
