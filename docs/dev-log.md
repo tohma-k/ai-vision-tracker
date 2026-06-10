@@ -225,7 +225,7 @@ Example: `90,120`
 The initial prototype successfully validated AI-controlled tracking using MG90S servos and a temporary mounting solution. As the system expanded to dual-axis pan-tilt tracking, mechanical rigidity became the primary limitation. Future revisions will use actuators designed for the bracket interface to improve load capacity and mounting stability.
 
 ### Mechanical Update
-Purchased a pair of MG996Rs. The brackets fit perfectly with the new servos. Also purchased a 5V 5A AC to DC power supply with a female terminal connector for sufficient power supply for the two servos.
+The original MG90S-based prototype was upgraded to a pair of MG996R high-torque servos to improve mechanical compatibility, load capacity, and mounting stability. The MG996Rs fit the pan-tilt bracket directly, eliminating the need for temporary mounting solutions. A dedicated 5V 5A external power supply and terminal connector were added to support reliable dual-servo operation under webcam load.
 
 ### Hardware Updates
 - Replaced MG90s servos with MG996R high-torque servos.
@@ -269,11 +269,39 @@ Purchased a pair of MG996Rs. The brackets fit perfectly with the new servos. Als
 
 ### Validation Results
 - Verified smooth pan and tilt movement under webcam load.
-- Confirmed external power supply provided sufficient current for dual-servo operation.
+- Confirmed stable dual-servo operation using an external 5V power supply.
 - Observed stable operation without brownouts, resets, or unexpected servo behavior.
 
 ### Software Updates
-- Updated angle contraints to prevent:
+- Updated angle constraints to prevent:
     - tilt bracket collisions with base assembly.
     - Camera interference with the mounting structure.
     - Excessive movement that could destabilize the platform.
+
+### Control Pipeline Updates
+- Extended the Arduino firmware to support dual-servo pan-tilt control through a comma-separated serial protocol.
+- Modified the Python tracking system to generate independent horizontal (`error_x`) and vertical (`error_y`) tracking signals.
+- Added dual-axis proportional controllers to independently adjust pan and tilt servo positions.
+- Updated serial communication format from single-angle commands to `pan,tilt` command pairs.
+
+### Parameters Tested
+- Deadzones: x = 30 pixels, y = 30 pixels
+- Proportional gain: x = 0.015, y = 0.015
+- Servo update interval: 0.10 seconds
+- Smoothing alpha: 0.13
+
+### Runtime Performance
+- Average FPS: ~15
+- Peak FPS: ~20
+- Webcam Resolution: 640×480
+- YOLO Inference Resolution: 320×320
+
+### Pan-Tilt Validation Results
+- Successfully tracked targets across both horizontal (`error_x`) and vertical (`error_y`) axes.
+- Verified coordinated pan and tilt servo actuation through the dual-axis control pipeline.
+- Maintained stable platform operation throughout tracking without loss of balance or mechanical interference.
+- Confirmed smooth camera repositioning in response to real-time target movement.
+- Validated reliable operation under webcam load using dual MG996R servos and external power.
+
+### Engineering Takeaway
+The transition from a single-axis prototype to a dual-axis tracking platform introduced new mechanical, electrical, and control-system challenges. Reliable operation required actuator upgrades, external power distribution, mechanical safety constraints, and iterative controller tuning to balance responsiveness and stability.
