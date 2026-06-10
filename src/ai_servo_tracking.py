@@ -44,8 +44,8 @@ PAN_MAX = 150
 TILT_MIN = 60
 TILT_MAX = 125
 
-deadzone_x = 60
-deadzone_y = 60
+deadzone_x = 30
+deadzone_y = 30
 
 kp_pan = 0.015
 kp_tilt = 0.015
@@ -65,6 +65,10 @@ print("Press q to quit.")
 # -----------------------------
 # MAIN LOOP
 # -----------------------------
+
+fps_sum = 0.0
+fps_count = 0
+avg_fps = 0.0
 
 while True:
 
@@ -235,11 +239,25 @@ while True:
     current_time = time.time()
     fps = 1 / (current_time - prev_time)
     prev_time = current_time
+    
+    fps_sum += fps
+    fps_count += 1
+    avg_fps = fps_sum / fps_count
 
     cv2.putText(
         frame,
         f"FPS: {fps:.1f}",
         (20, 105),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.7,
+        (255, 255, 255),
+        2
+    )
+    
+    cv2.putText(
+        frame,
+        f"AVG FPS: {avg_fps:.1f}",
+        (20, 135),
         cv2.FONT_HERSHEY_SIMPLEX,
         0.7,
         (255, 255, 255),
