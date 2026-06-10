@@ -25,17 +25,7 @@ Control MG90S servo directly from Python through USB serial communication.
 
 ## Architecture
 
-Python
-↓
-PySerial
-↓
-USB Serial
-↓
-Arduino
-↓
-PWM Signal
-↓
-Servo
+Python -> PySerial -> USB Serial -> Arduino -> PWM Signal -> Servo
 
 ## Communication Protocol
 - Baud rate: 9600
@@ -56,27 +46,7 @@ Integrate the computer vision tracking system with the servo control pipeline so
 
 ## System Architecture
 
-Camera
-↓
-OpenCV Video Capture
-↓
-YOLOv8 Person Detection
-↓
-Target Selection
-↓
-Tracking Error Calculation
-↓
-Exponential Smoothing
-↓
-Python Control Logic
-↓
-PySerial Communication
-↓
-Arduino Serial Receiver
-↓
-PWM Servo Signal
-↓
-MG90S Servo Rotation
+![Architecture](architecture.png)
 
 ## Tracking Logic
 
@@ -256,3 +226,54 @@ The initial prototype successfully validated AI-controlled tracking using MG90S 
 
 ### Mechanical Update
 Purchased a pair of MG996Rs. The brackets fit perfectly with the new servos. Also purchased a 5V 5A AC to DC power supply with a female terminal connector for sufficient power supply for the two servos.
+
+### Hardware Updates
+- Replaced MG90s servos with MG996R high-torque servos.
+- Added dedicated external sservo power supply.
+- Mounted webcam onto pan-tilt assembly.
+- Integrated pan and tilt axes into one platform.
+
+### Wiring
+
+#### Pan Servo
+
+| Servo Wire | Connection |
+|------------|------------|
+| Red | External 5V Supply |
+| Brown | Common GND |
+| Orange | Arduino Pin 9 |
+
+#### Tilt Servo
+
+| Servo Wire | Connection |
+|------------|------------|
+| Red | External 5V Supply |
+| Brown | Common GND |
+| Orange | Arduino Pin 10 |
+
+#### Arduino
+
+| Pin | Connection |
+|------|-----------|
+| GND | Common Ground Rail |
+| Pin 9 | Pan Servo Signal |
+| Pin 10 | Tilt Servo Signal |
+| USB | Laptop |
+
+#### Power Supply
+
+| Terminal | Connection |
+|-----------|-----------|
+| +5V | Servo Power Rail |
+| GND | Common Ground Rail |
+
+### Validation Results
+- Verified smooth pan and tilt movement under webcam load.
+- Confirmed external power supply provided sufficient current for dual-servo operation.
+- Observed stable operation without brownouts, resets, or unexpected servo behavior.
+
+### Software Updates
+- Updated angle contraints to prevent:
+    - tilt bracket collisions with base assembly.
+    - Camera interference with the mounting structure.
+    - Excessive movement that could destabilize the platform.
