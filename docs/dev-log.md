@@ -305,3 +305,12 @@ The original MG90S-based prototype was upgraded to a pair of MG996R high-torque 
 
 ### Engineering Takeaway
 The transition from a single-axis prototype to a dual-axis tracking platform introduced new mechanical, electrical, and control-system challenges. Reliable operation required actuator upgrades, external power distribution, mechanical safety constraints, and iterative controller tuning to balance responsiveness and stability.
+
+## Phase 7 - Person Recognition
+
+Moving on to adding a person recognition feature. 
+Current plan:
+1. Add a LCD + LED output, where Python sends status and Arduino displays the status (name / unknown)and turn green LED on (red otherwise)
+2. Use Python to do manual person labeling
+3. Connect database to store faces
+
