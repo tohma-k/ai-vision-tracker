@@ -6,7 +6,12 @@ arduino = serial.Serial('COM9', 9600)
 time.sleep(2)
 
 while True:
-    if (input("verified? (y/n): ")):
+    status = input("verified? (y/n): ")
+    if (status == "y"):
         arduino.write(b"VERIFIED\n")
-    else:
+    elif (status == "n"):
         arduino.write(b"NOT_VERIFIED\n")
+    elif (status == "q"):
+        break
+    else:
+        print("Invalid input")
