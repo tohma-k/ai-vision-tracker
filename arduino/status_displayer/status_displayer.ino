@@ -18,12 +18,26 @@ void setup() {
 
 void loop() {
   if (Serial.available()) {
-    String status = Serial.readStringUntil('\n');
-    status.trim();
+    String message = Serial.readStringUntil('\n');
+    message.trim();
 
     lcd.clear();
+
+    if (message == "NOT_FOUND") {
+      lcd.setCursor(0, 0);
+      lcd.print("NOT FOUND");
+
+      digitalWrite(greenLED, LOW);
+      digitalWrite(redLED, LOW);
+      return;
+    }
+
+    int commaIndex = message.indexOf(',');
+    String name = message.substring(0, commaIndex);
+    String status = message.substring(commaIndex + 1);
+
     lcd.setCursor(0, 0);
-    lcd.print("Name");
+    lcd.print(name);
 
     lcd.setCursor(0, 1);
 
