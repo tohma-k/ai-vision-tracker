@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_NAME = "faces.gb"
+DB_NAME = "faces.db"
 
 connection = sqlite3.connect(DB_NAME)
 cursor = connection.cursor()

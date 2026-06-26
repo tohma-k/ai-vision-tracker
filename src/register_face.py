@@ -1,54 +1,80 @@
 import cv2
 import face_recognition
-import pickle
-import os
+import sqlite3
 
-DB_FILE = "faces.pkl"
+DB_NAME = "faces.db"
 
-name = input("Enter name: ")
+def save_face(name, encoding):
+    connection = sqlite3.connect(DB_NAME)
+    cursor = connection.cursor()
 
-camera = cv2.VideoCapture(0)
-print("Press SPACE to capture face. Press Q to quit.")
+    encoding_bytes = encoding.tobytes()
 
-while True:
-    ret, frame = camera.read()
-    if not ret:
-        break
-    
-    cv2.imshow("Register Face", frame)
-    
-    key = cv2.waitKey(1)
-    
-    if key == ord(" "):
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        face_locations = face_recognition.face_locations(rgb)
-        
-        if len(face_locations) == 0:
-            print("No face found. Try again.")
-            continue
-        
-        encoding = face_recognition.face_encodings(rgb, face_locations)[0]
-        
-        if os.path.exists(DB_FILE):
-            with open(DB_FILE, "rb") as f:
-                database = pickle.load(f)
-        
-        else:
-            database = []
-            
-        database.append({
-            "name": name,
-            "encoding": encoding
-        })
-        
-        with open(DB_FILE, "wb") as f:
-            pickle.dump(database, f)
-        
-        print(f"Saved face for {name}")
-        break
-    
-    elif key == ord("q"):
-        break
+    cursor.execute(
+        "INSERT INTO faces (name, encoding) VALUES (?, ?)",
+        (name, encoding_bytes)
+    )
 
-camera.release()
-cv2.destroyAllWindows()
+    connection.commit()
+    connection.close()
+
+def main():
+    name = input("Enter name: ").strip()
+
+    if name == "":
+        print("Name cannot be empty.")
+        return
+
+    camera = cv2.VideoCapture(0)
+
+    if not camera.isOpened():
+        print("Could not open camera.")
+        return
+
+    print("Press SPACE to capture face.")
+    print("Press Q to quit.")
+
+    while True:
+        ret, frame = camera.read()
+
+        if not ret:
+            print("Could not read from camera.")
+            break
+
+        cv2.imshow("Register Face", frame)
+
+        key = cv2.waitKey(1)
+
+        if key == ord(" "):
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            face_locations = face_recognition.face_locations(rgb_frame)
+
+            if len(face_locations) == 0:
+                print("No face detected. Try again.")
+                continue
+
+            if len(face_locations) > 1:
+                print("More than one face detected. Only show one face.")
+                continue
+
+            face_encodings = face_recognition.face_encodings(
+                rgb_frame,
+                face_locations
+            )
+
+            encoding = face_encodings[0]
+
+            save_face(name, encoding)
+
+            print(f"Saved face for {name}.")
+            break
+
+        elif key == ord("q"):
+            break
+
+    camera.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
