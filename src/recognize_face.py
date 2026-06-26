@@ -80,9 +80,7 @@ def main():
                 last_message
             )
 
-        else:
-            face_encoding = face_encodings[0]
-
+        for face_encoding, face_location in zip(face_encodings, face_locations):
             face_distances = face_recognition.face_distance(
                 known_encodings,
                 face_encoding
@@ -93,14 +91,52 @@ def main():
 
             if best_distance < 0.5:
                 name = known_names[best_match_index]
+                status = "VERIFIED"
+                label = f"{name} - VERIFIED"
+                color = (0, 255, 0)
                 message = f"{name},VERIFIED"
             else:
+                name = "Unknown"
+                status = "NOT VERIFIED"
+                label = "Unknown - NOT VERIFIED"
+                color = (0, 0, 255)
                 message = "Unknown,NOT_VERIFIED"
 
             last_message = send_to_arduino(
                 arduino,
                 message,
                 last_message
+            )
+
+            top, right, bottom, left = face_location
+
+            # Scale box back up because detection was done on 1/4 size frame
+            top *= 4
+            right *= 4
+            bottom *= 4
+            left *= 4
+
+            # Draw rectangle around face
+            cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
+
+            # Draw filled rectangle for label background
+            cv2.rectangle(
+                frame,
+                (left, bottom - 25),
+                (right, bottom),
+                color,
+                cv2.FILLED
+            )
+
+            # Draw label text
+            cv2.putText(
+                frame,
+                label,
+                (left + 6, bottom - 6),
+                cv2.FONT_HERSHEY_DUPLEX,
+                0.5,
+                (255, 255, 255),
+                1
             )
 
         cv2.imshow("Face Recognition", frame)
