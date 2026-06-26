@@ -314,3 +314,4 @@ Current plan:
 2. Use Python to do manual person labeling
 3. Connect database to store faces
 
+6/26/26 - task 1, 2, 3 complete. Recognition system may need future optimization as fps is very low. Used face_recognition Python library to label people and SQLite to store faces + labels. Moving on to merge recognition system with AI servo tracker.
