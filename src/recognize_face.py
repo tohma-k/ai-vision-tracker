@@ -58,7 +58,7 @@ while True:
     
     cv2.imshow("Face Recognition", frame)
     
-    if cv2.waitkey(1) == ord("q"):
+    if cv2.waitKey(1) == ord("q"):
         break
 
 camera.release()
